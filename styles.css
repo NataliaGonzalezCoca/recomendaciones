@@ -909,7 +909,6 @@ textarea:focus-visible {
 
   /* Centra el grid horizontalmente. */
   margin: 0 auto;
-
   /*
     Deja espacio inferior adaptable:
     - mínimo 3rem.
@@ -1328,7 +1327,6 @@ textarea:focus-visible {
   padding: 1rem;
 }
 
-
 /*
   .carousel-inner es el contenedor interno que guarda las diapositivas.
 */
@@ -1353,7 +1351,7 @@ textarea:focus-visible {
     Si el contenedor es más ancho que el póster, pueden quedar bandas
     laterales; este color hace que se vean intencionales y no transparentes.
   */
-  background-color: var(--color-fondo);
+  /*background-color: var(--color-fondo);*/
 }
 
 
@@ -1401,7 +1399,7 @@ textarea:focus-visible {
     Mantiene visible un color de fondo detrás de los espacios no ocupados
     por el póster vertical.
   */
-  background-color: var(--color-fondo);
+  background-color: var(--color-fondo-secundario);
 }
 
 
@@ -1640,6 +1638,7 @@ textarea:focus-visible {
   Bootstrap necesita controlar los gutters y el ancho de estas columnas.
 */
 .carousel .offcanvas-body > .row {
+  height: 100%; /****/
   /*
     Alinea verticalmente las columnas de texto e imagen al centro.
   */
@@ -1683,8 +1682,13 @@ textarea:focus-visible {
   */
   padding-left: 0;
   padding-right: 0;
+  /****/
+  /* ¡Clave para que midan lo mismo! Ambas crecen por igual */
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Forzamos que midan el 100% de la altura de la fila */
+  /****/
 }
-
 
 /*
   Selecciona el primer párrafo hijo directo de cada columna dentro del panel.
@@ -1696,7 +1700,7 @@ textarea:focus-visible {
   margin-bottom: 1rem;
 
   /* Aplica amarillo dorado. */
-  color: var(--color-amarillo);
+  color: var(--color-rosa);
 
   /*
     Tamaño adaptable:
@@ -1765,7 +1769,6 @@ textarea:focus-visible {
 .carousel .offcanvas-body img {
   /* Hace que la imagen ocupe el ancho de su columna. */
   width: 100%;
-
   /*
     Limita la altura máxima aproximada a 672px.
 
