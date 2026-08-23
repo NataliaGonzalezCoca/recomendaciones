@@ -1,0 +1,175 @@
+body{
+    background-color: #471E65;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: #c767a0;
+}
+/**------------------------HEADER---------------------*/
+.navbar{
+    background-color: #c767a0 !important;
+}
+/*Texto de navbar*/
+.navbar-brand{
+    color: #471E65 !important;
+    font-size: 40px;
+    /*usamos ésto para alinear el contenido al centro*/
+    margin-left: auto;
+    margin-right: auto;
+}
+.navbar img{
+    width: 80px;
+}
+/*Menú desplegable*/
+.navbar .offcanvas{
+    background-color: #7254a5;
+    text-align: center;
+    color: #FE53BB;
+}
+/*Botón de buscar en menú*/
+.navbar .offcanvas .btn{
+    background-color: #471E65;
+    color:#FE53BB;
+    border: #471E65;
+}
+/*Barra de entrada de búsqueda*/
+.navbar .offcanvas input{
+    background-color: #ce9eba;
+    border: #ce9eba ;
+    text-align: center;
+}
+/*Submenú de explorar por géneros*/
+.navbar .offcanvas .dropdown-menu{
+    background-color: #ce9eba;
+    text-align: center;
+}
+.navbar .offcanvas .dropdown-menu li :hover{
+    background-color: #532574;
+    color: #FE53BB;
+    text-align: center;
+    font-size: 18px;
+}
+/*Botones principales del menú desplegable*/
+.navbar .offcanvas .nav-link{
+    color: #FE53BB;
+    font-size: 23px;
+}
+/*Menú hamburguesa*/
+.navbar-toggler{
+    color: #FE53BB;
+    border:0;
+}
+
+/**---------------------PRESENTACIÓN---------------*/
+
+.presentacion{
+    padding-top: 100px;
+    padding-bottom: 100px;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+.presentacion h1,h5{
+    text-align: center;
+    color: #E9CC58;
+}
+.presentacion h4{
+    text-align: justify;
+    margin-bottom: 50px;
+    margin-top: 50px;
+}
+
+/**---------------------TARJETAS-----------------*/
+
+.col{
+    padding-right: 10%;
+}
+.row{
+    padding-left: 10%;
+}
+/*Imágenes de la página principal*/
+.figure-img{
+    width: 800px;
+    height: 400px;
+}
+/*Descripción de tarjetas*/
+.figure-caption{
+    color: #E9CC58;
+    text-align:center;
+    font-size:larger;
+}
+.figure-caption h5{
+    font-size:larger;
+}
+/*Botón de explorar películas*/
+.btn-primary{
+    color:#7254a5;
+    background-color: #F5D300;
+    border:0;
+}
+.btn-primary:hover{
+    background-color:#FE53BB;
+    color: #F5D300;
+}
+.card{
+    background-color:#E9CC58;
+}
+.carousel {
+    padding: 3%;
+}
+.carousel .offcanvas{
+    background-color:#7254a5;
+}
+.carousel .offcanvas-body img{
+    height: 700px;
+}
+.carousel .offcanvas-body .col{
+    padding: 0%;
+    color:#FE53BB;
+    align-content: center;
+}
+.carousel .offcanvas-body .col p{
+    font-size: 30px;
+    font-weight: 500;
+}
+.carousel .offcanvas-body .col li{
+    background-color:#8563c0;
+    color:#471E65;
+    border-color:#F5D300;
+    font-size: large;
+    font-weight: 400;
+}
+
+/**---------------FORMULARIO--------------*/
+
+.form h4{
+    text-align: center;
+    padding:5%;
+    font-size: 30px;
+}
+.form .mb-3{
+    padding-left: 30%;
+    padding-right: 30%;
+    font-size: 25px;
+}
+#exampleFormControlInput1{
+    background-color:#8563c0;
+    border:0;
+}
+#exampleFormControlTextarea1{
+    background-color:#8563c0;
+    border:0;
+}
+.form{
+    padding-bottom: 5%;
+}
+
+/**---------------------FOOTER------------------*/
+
+footer{
+    padding:3%;
+    text-align: center;
+    background-color:#E9CC58;
+    font-size: 20px;
+    font-weight: 800;
+    color: #FE53BB;
+}
