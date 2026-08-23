@@ -1,175 +1,2362 @@
-body{
-    background-color: #471E65;
-    font-family: "Montserrat Alternates", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    color: #c767a0;
-}
-/**------------------------HEADER---------------------*/
-.navbar{
-    background-color: #c767a0 !important;
-}
-/*Texto de navbar*/
-.navbar-brand{
-    color: #471E65 !important;
-    font-size: 40px;
-    /*usamos ésto para alinear el contenido al centro*/
-    margin-left: auto;
-    margin-right: auto;
-}
-.navbar img{
-    width: 80px;
-}
-/*Menú desplegable*/
-.navbar .offcanvas{
-    background-color: #7254a5;
-    text-align: center;
-    color: #FE53BB;
-}
-/*Botón de buscar en menú*/
-.navbar .offcanvas .btn{
-    background-color: #471E65;
-    color:#FE53BB;
-    border: #471E65;
-}
-/*Barra de entrada de búsqueda*/
-.navbar .offcanvas input{
-    background-color: #ce9eba;
-    border: #ce9eba ;
-    text-align: center;
-}
-/*Submenú de explorar por géneros*/
-.navbar .offcanvas .dropdown-menu{
-    background-color: #ce9eba;
-    text-align: center;
-}
-.navbar .offcanvas .dropdown-menu li :hover{
-    background-color: #532574;
-    color: #FE53BB;
-    text-align: center;
-    font-size: 18px;
-}
-/*Botones principales del menú desplegable*/
-.navbar .offcanvas .nav-link{
-    color: #FE53BB;
-    font-size: 23px;
-}
-/*Menú hamburguesa*/
-.navbar-toggler{
-    color: #FE53BB;
-    border:0;
+/* ==========================================================================
+   GLOSARIO RÁPIDO DE CSS
+   ==========================================================================
+   selector {
+     propiedad: valor;
+   }
+
+   - "selector" indica qué elemento HTML recibe el estilo.
+   - "propiedad" indica qué aspecto se modifica: color, tamaño, margen, etc.
+   - "valor" indica el resultado de esa modificación.
+   - El punto "." selecciona una clase: .navbar selecciona class="navbar".
+   - El símbolo "#" selecciona un id: #inicio selecciona id="inicio".
+   - :hover se activa cuando el cursor pasa sobre un elemento.
+   - :focus se activa cuando un elemento recibe foco, por ejemplo con Tab.
+   - :focus-visible muestra el foco principalmente cuando se navega con teclado.
+   - ::before y ::after permiten crear contenido decorativo con CSS.
+   - Las comas permiten aplicar el mismo bloque a varios selectores.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABLES GLOBALES DE DISEÑO
+   ========================================================================== */
+
+/*
+  :root representa el nivel más alto del documento HTML.
+
+  Las propiedades que comienzan con "--" son variables CSS.
+  No cambian la página por sí mismas: almacenan valores para reutilizarlos.
+
+  Una variable se usa después con:
+  propiedad: var(--nombre-de-la-variable);
+
+  Ventaja: si quieres cambiar un color en todo el sitio, cambias una sola
+  línea aquí en lugar de buscar el mismo código hexadecimal repetido.
+*/
+:root {
+  /* Guarda el tono principal de fondo: morado muy oscuro. */
+  --color-fondo: #25112f;
+
+  /* Guarda un segundo morado para degradados y secciones secundarias. */
+  --color-fondo-secundario: #3d1d55;
+
+  /* Guarda un morado medio para superficies, tarjetas o componentes. */
+  --color-superficie: #7254a5;
+
+  /* Guarda una versión más clara del color de superficie. */
+  --color-superficie-clara: #8563c0;
+
+  /* Guarda el rosa intenso de la identidad visual. */
+  --color-rosa: #fe53bb;
+
+  /* Guarda un rosa menos intenso para fondos o detalles suaves. */
+  --color-rosa-suave: #c767a0;
+
+  /* Guarda el amarillo dorado para títulos y elementos destacados. */
+  --color-amarillo: #e9cc58;
+
+  /* Guarda un amarillo más intenso para llamadas a la acción y foco. */
+  --color-amarillo-intenso: #f5d300;
+
+  /* Guarda un blanco ligeramente rosado para textos sobre fondo oscuro. */
+  --color-texto: #fff7fc;
+
+  /* Guarda un morado muy oscuro para textos sobre fondos claros. */
+  --color-texto-oscuro: #2b123b;
+
+  /*
+    Guarda una sombra suave reutilizable.
+
+    Valores de box-shadow:
+    1. 0      = desplazamiento horizontal; 0 significa sin movimiento lateral.
+    2. 12px   = desplazamiento vertical; la sombra se coloca hacia abajo.
+    3. 30px   = desenfoque; un valor alto vuelve la sombra más suave.
+    4. rgba() = color de la sombra con transparencia.
+  */
+  --sombra-suave: 0 12px 30px rgba(16, 5, 24, 0.28);
+
+  /*
+    Guarda una sombra más grande e intensa.
+
+    Esta se usa normalmente al colocar el cursor sobre una tarjeta.
+  */
+  --sombra-fuerte: 0 20px 45px rgba(16, 5, 24, 0.42);
+
+  /*
+    Guarda un valor de borde redondeado.
+
+    rem es una medida relativa al tamaño de letra raíz.
+    Generalmente 1rem equivale a 16px, aunque puede variar si el usuario
+    cambia el tamaño de letra de su navegador.
+  */
+  --radio-grande: 1rem;
 }
 
-/**---------------------PRESENTACIÓN---------------*/
 
-.presentacion{
-    padding-top: 100px;
-    padding-bottom: 100px;
-    padding-left: 20%;
-    padding-right: 20%;
-}
-.presentacion h1,h5{
-    text-align: center;
-    color: #E9CC58;
-}
-.presentacion h4{
-    text-align: justify;
-    margin-bottom: 50px;
-    margin-top: 50px;
+/* ==========================================================================
+   2. NORMALIZACIÓN BÁSICA
+   ========================================================================== */
+
+/*
+  * selecciona todos los elementos HTML.
+
+  *::before y *::after seleccionan elementos decorativos que CSS puede crear
+  antes y después de un elemento.
+
+  box-sizing: border-box hace que el ancho y alto declarado de un elemento
+  incluya el padding y el borde.
+
+  Ejemplo:
+  Si una caja tiene width: 300px y padding: 20px:
+  - Sin border-box, puede ocupar 340px.
+  - Con border-box, seguirá ocupando 300px.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-/**---------------------TARJETAS-----------------*/
 
-.col{
+/*
+  html representa todo el documento.
+
+  scroll-behavior: smooth anima suavemente el desplazamiento al visitar
+  enlaces internos, por ejemplo <a href="#inicio">.
+
+  Si no existen enlaces internos en tu sitio, esta línea no tendrá un efecto
+  visible, pero tampoco genera problemas.
+*/
+html {
+  scroll-behavior: smooth;
+}
+
+
+/*
+  body representa toda la parte visible de la página.
+
+  Aquí se define el fondo general, la fuente base, el color de texto
+  predeterminado y el interlineado.
+*/
+body {
+  /*
+    Elimina el margen automático que los navegadores suelen aplicar al body.
+    Así el fondo y los elementos pueden llegar hasta los bordes de la ventana.
+  */
+  margin: 0;
+
+  /*
+    Evita que el layout se reduzca a menos de 320px de ancho.
+
+    320px es una referencia histórica de pantallas móviles pequeñas.
+    Puedes eliminar esta línea si deseas que el sitio se comprima aún más.
+  */
+  min-width: 320px;
+
+  /*
+    background permite aplicar varias capas de fondo separadas por comas.
+
+    La primera capa es una luz rosa suave.
+    radial-gradient crea un degradado circular:
+    - circle: usa forma circular.
+    - at top right: inicia en la esquina superior derecha.
+    - rgba(199, 103, 160, 0.2): rosa con 20% de opacidad.
+    - transparent 30rem: se vuelve transparente al llegar a 30rem.
+
+    La segunda capa es un degradado morado de base.
+    linear-gradient crea un degradado recto:
+    - 135deg: dirección diagonal.
+    - var(--color-fondo) 0%: inicia en morado oscuro.
+    - var(--color-fondo-secundario) 100%: termina en el segundo morado.
+  */
+  background:
+    radial-gradient(circle at top right, rgba(199, 103, 160, 0.2), transparent 30rem),
+    linear-gradient(135deg, var(--color-fondo) 0%, var(--color-fondo-secundario) 100%);
+
+  /*
+    Define el color de texto predeterminado de la página.
+    var() recupera la variable creada en :root.
+  */
+  color: var(--color-texto);
+
+  /*
+    Selecciona Montserrat Alternates como fuente principal.
+    sans-serif es el respaldo: se utiliza si la fuente de Google no carga.
+  */
+  font-family: "Montserrat Alternates", sans-serif;
+
+  /*
+    Define grosor regular para el texto general.
+    400 es el peso normal; 300 suele ser más fino y menos legible.
+  */
+  font-weight: 400;
+
+  /*
+    Define la distancia vertical entre líneas de texto.
+    1.6 significa 1.6 veces el tamaño de fuente.
+    Mejora la lectura en párrafos.
+  */
+  line-height: 1.6;
+}
+
+
+/*
+  img selecciona todas las imágenes de la página.
+*/
+img {
+  /*
+    Convierte la imagen en un elemento de bloque.
+
+    Las imágenes son inline por defecto y pueden dejar un pequeño espacio
+    debajo, como si se alinearan con una línea de texto.
+    display: block elimina ese espacio visual.
+  */
+  display: block;
+
+  /*
+    Evita que una imagen ocupe más ancho que su contenedor.
+    Es una medida básica de diseño responsivo.
+  */
+  max-width: 100%;
+}
+
+
+/*
+  Estos selectores muestran un foco visible en elementos interactivos.
+
+  a         = enlaces.
+  button    = botones.
+  input     = campos de entrada.
+  textarea  = áreas de texto.
+  :focus-visible = se activa especialmente al navegar con teclado.
+
+  Esto beneficia la accesibilidad porque la persona puede ver dónde se
+  encuentra al usar la tecla Tab.
+*/
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  /*
+    Dibuja un borde externo amarillo de 3px.
+
+    outline no ocupa espacio dentro del elemento, a diferencia de border.
+    solid indica una línea continua.
+  */
+  outline: 3px solid var(--color-amarillo-intenso);
+
+  /*
+    Separa el outline 3px del borde real del elemento.
+    Hace que el foco sea más fácil de distinguir.
+  */
+  outline-offset: 3px;
+}
+
+
+/* ==========================================================================
+   3. NAVBAR / BARRA DE NAVEGACIÓN
+   ========================================================================== */
+
+/*
+  .navbar selecciona la barra superior de Bootstrap.
+
+  IMPORTANTE:
+  Se eliminó "backdrop-filter: blur(10px);" porque en tu proyecto impedía
+  que el menú lateral del botón hamburguesa se visualizara completamente.
+
+  backdrop-filter crea efectos sobre lo que existe detrás de un elemento.
+  Algunos navegadores y combinaciones con offcanvas de Bootstrap pueden
+  generar problemas de capas, transparencia o posicionamiento.
+
+  El navbar seguirá teniendo fondo rosa y sombra sin usar esa propiedad.
+*/
+.navbar {
+  /*
+    Define una altura mínima aproximada de 88px.
+    5.5rem suele equivaler a 88px cuando 1rem equivale a 16px.
+  */
+  min-height: 5.5rem;
+
+  /*
+    padding acepta dos valores:
+    - 0.75rem arriba y abajo.
+    - 0 a la izquierda y derecha.
+  */
+  padding: 0.75rem 0;
+
+  /*
+    Fondo rosa con 95% de opacidad.
+
+    rgba tiene cuatro valores:
+    - rojo: 199
+    - verde: 103
+    - azul: 160
+    - opacidad: 0.95
+
+    !important aumenta la prioridad para reemplazar el fondo de Bootstrap.
+  */
+  background: rgba(199, 103, 160, 0.95) !important;
+
+  /*
+    Crea una sombra debajo del navbar:
+    - 0: no se mueve a izquierda/derecha.
+    - 4px: baja 4px.
+    - 18px: cantidad de desenfoque.
+    - rgba: morado oscuro semitransparente.
+  */
+  box-shadow: 0 4px 18px rgba(30, 9, 42, 0.22);
+
+  /*
+    NO agregar backdrop-filter: blur(10px).
+
+    Se retiró porque hacía que el menú desplegable/offcanvas del botón
+    hamburguesa no se visualizara completamente.
+  */
+}
+
+
+/*
+  .navbar img selecciona todas las imágenes ubicadas dentro del navbar.
+  En tu HTML afecta el logo.
+*/
+.navbar img {
+  /*
+    clamp(mínimo, tamaño-ideal, máximo) crea un tamaño adaptable:
+
+    - 3.5rem: el logo nunca será menor que este tamaño.
+    - 8vw: tamaño ideal equivalente al 8% del ancho de la ventana.
+    - 5rem: el logo nunca será mayor que este tamaño.
+
+    vw significa "viewport width", es decir, porcentaje del ancho visible.
+  */
+  width: clamp(3.5rem, 8vw, 5rem);
+
+  /*
+    Calcula la altura automáticamente según el ancho.
+    Esto evita que el logo se deforme.
+  */
+  height: auto;
+
+  /*
+    Mantiene toda la imagen visible dentro de su área.
+    Es útil si una imagen tiene una proporción irregular.
+  */
+  object-fit: contain;
+}
+
+
+/*
+  .navbar-brand es el enlace o texto principal de la barra de navegación.
+
+  En tu HTML corresponde a "Fotogramas que permanecen".
+*/
+.navbar-brand {
+  /*
+    Usa el morado oscuro para el texto.
+    !important evita que Bootstrap sobrescriba este color.
+  */
+  color: var(--color-texto-oscuro) !important;
+
+  /*
+    Usa Shantell Sans como fuente decorativa.
+    Si no está disponible, utiliza una fuente cursive genérica.
+  */
+  font-family: "Shantell Sans", cursive;
+
+  /*
+    Tamaño de texto adaptable:
+    - mínimo: 1.45rem.
+    - ideal: 3% del ancho de la ventana.
+    - máximo: 2.4rem.
+  */
+  font-size: clamp(1.45rem, 3vw, 2.4rem);
+
+  /* 700 corresponde a un grosor de letra tipo negrita. */
+  font-weight: 700;
+
+  /*
+    Reduce ligeramente la separación vertical entre líneas.
+    Es útil si el nombre de la marca ocupa dos líneas en móvil.
+  */
+  line-height: 1.1;
+
+  /*
+    Centra el texto dentro del área que ocupe el enlace.
+  */
+  text-align: center;
+
+  /*
+    Anima el cambio de color durante 0.2 segundos.
+    ease hace que la animación inicie y termine suavemente.
+  */
+  transition: color 0.2s ease;
+}
+
+
+/*
+  :hover se activa al poner el cursor sobre el nombre de la marca.
+*/
+.navbar-brand:hover {
+  /*
+    Cambia el texto a blanco.
+    !important conserva prioridad frente a Bootstrap.
+  */
+  color: #ffffff !important;
+}
+
+
+/*
+  .navbar .offcanvas selecciona el panel lateral del menú que está
+  dentro de la barra de navegación.
+*/
+.navbar .offcanvas {
+  /*
+    min() elige el valor menor:
+    - 88vw: 88% del ancho de pantalla.
+    - 25rem: aproximadamente 400px.
+
+    En móvil, el panel puede ocupar casi toda la pantalla.
+    En escritorio, no crece más allá de 25rem.
+  */
+  width: min(88vw, 25rem);
+
+  /*
+    Fondo degradado vertical:
+    - 180deg: de arriba hacia abajo.
+    - #7254a5 0%: morado medio arriba.
+    - #4b2867 100%: morado más oscuro abajo.
+  */
+  background: linear-gradient(180deg, #7254a5 0%, #4b2867 100%);
+
+  /* Establece el color base para textos del menú. */
+  color: var(--color-texto);
+
+  /*
+    Alinea a la izquierda los textos del menú.
+    En listas largas suele resultar más fácil de leer que centrado.
+  */
+  text-align: left;
+}
+
+
+/*
+  .offcanvas-title es el título situado en la cabecera del panel lateral.
+  En tu HTML corresponde al título "Menú".
+*/
+.navbar .offcanvas-title {
+  /* Aplica amarillo dorado al título. */
+  color: var(--color-amarillo);
+
+  /* Hace el título más destacado. */
+  font-weight: 700;
+}
+
+
+/*
+  .nav-link selecciona los enlaces principales del menú:
+  Inicio, Tienda y Explora por géneros.
+*/
+.navbar .offcanvas .nav-link {
+  /*
+    padding con dos valores:
+    - 0.8rem arriba y abajo.
+    - 0.9rem a ambos lados.
+
+    Amplía el área clicable, importante para pantallas táctiles.
+  */
+  padding: 0.8rem 0.9rem;
+
+  /*
+    Redondea las esquinas del fondo que aparecerá al hacer hover.
+  */
+  border-radius: 0.65rem;
+
+  /* Establece texto blanco para contrastar con el fondo morado. */
+  color: #ffffff;
+
+  /* Aumenta levemente el tamaño con respecto al texto base. */
+  font-size: 1.05rem;
+
+  /* 600 corresponde a seminegrita. */
+  font-weight: 600;
+
+  /*
+    Prepara transiciones para tres propiedades:
+    - background-color: color de fondo.
+    - color: color del texto.
+    - transform: movimiento o escala.
+  */
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+
+/*
+  Este bloque funciona al pasar el cursor sobre un enlace o al enfocarlo
+  con teclado.
+*/
+.navbar .offcanvas .nav-link:hover,
+.navbar .offcanvas .nav-link:focus {
+  /*
+    Agrega un fondo rosa transparente.
+    El último valor 0.18 es la opacidad de 18%.
+  */
+  background-color: rgba(254, 83, 187, 0.18);
+
+  /* Cambia las letras a amarillo. */
+  color: var(--color-amarillo);
+
+  /*
+    Mueve visualmente el enlace 0.25rem hacia la derecha.
+    No modifica la posición real de los demás elementos.
+  */
+  transform: translateX(0.25rem);
+}
+
+
+/*
+  .dropdown-menu selecciona el contenedor del submenú
+  "Explora por géneros".
+*/
+.navbar .offcanvas .dropdown-menu {
+  /*
+    Añade espacio interno alrededor de todas las opciones.
+  */
+  padding: 0.5rem;
+
+  /*
+    Añade un borde de 1px:
+    - solid: línea continua.
+    - rgba blanco con 20% de opacidad.
+  */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Redondea las esquinas del submenú. */
+  border-radius: 0.75rem;
+
+  /* Establece un rosa claro como fondo. */
+  background-color: #f8d9e8;
+
+  /* Aplica la variable de sombra suave definida en :root. */
+  box-shadow: var(--sombra-suave);
+
+  /* Alinea a la izquierda las opciones internas. */
+  text-align: left;
+}
+
+
+/*
+  .dropdown-item selecciona cada enlace individual dentro del submenú.
+*/
+.navbar .offcanvas .dropdown-item {
+  /*
+    Añade área pulsable:
+    - 0.65rem arriba y abajo.
+    - 0.75rem a izquierda y derecha.
+  */
+  padding: 0.65rem 0.75rem;
+
+  /* Redondea el fondo que aparece en hover. */
+  border-radius: 0.45rem;
+
+  /* Usa texto oscuro sobre el fondo rosa claro. */
+  color: var(--color-texto-oscuro);
+
+  /* Reduce levemente el tamaño para diferenciar subopciones de opciones principales. */
+  font-size: 0.95rem;
+
+  /*
+    Permite que títulos largos se dividan en varias líneas.
+    Sin esta regla, algunos menús pueden forzar una sola línea.
+  */
+  white-space: normal;
+
+  /* Suaviza cambios de fondo y color. */
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+
+/*
+  Se aplica al poner el cursor sobre una opción del submenú
+  o al enfocarla con teclado.
+*/
+.navbar .offcanvas .dropdown-item:hover,
+.navbar .offcanvas .dropdown-item:focus {
+  /* Cambia el fondo a morado oscuro. */
+  background-color: var(--color-fondo-secundario);
+
+  /* Cambia el texto a blanco. */
+  color: #ffffff;
+}
+
+
+/*
+  IMPORTANTE:
+  Esta forma es preferible a tu selector original:
+
+  .navbar .offcanvas .dropdown-menu li :hover
+
+  Ese selector contiene un espacio entre "li" y ":hover".
+  Por ello puede afectar a elementos descendientes dentro de li, no
+  necesariamente al enlace que deseas estilizar.
+
+  Usar .dropdown-item apunta directamente a cada elemento Bootstrap.
+*/
+
+
+/*
+  .form-control es la clase Bootstrap usada por inputs y textareas.
+  Aquí se limita al campo de búsqueda dentro del offcanvas del navbar.
+*/
+.navbar .offcanvas .form-control {
+  /*
+    Crea un borde invisible de 1px.
+
+    Mantener el borde aunque sea transparente evita que el campo cambie
+    de tamaño cuando el borde se vuelva visible al recibir foco.
+  */
+  border: 1px solid transparent;
+
+  /* Aplica un fondo blanco con ligera tonalidad rosa. */
+  background-color: #fff5fb;
+
+  /* Establece texto oscuro para lectura clara. */
+  color: var(--color-texto-oscuro);
+
+  /*
+    Alinea el texto escrito a la izquierda.
+    Es la alineación convencional para entradas de búsqueda.
+  */
+  text-align: left;
+}
+
+
+/*
+  :focus se activa al seleccionar el campo, ya sea con clic o teclado.
+*/
+.navbar .offcanvas .form-control:focus {
+  /* Vuelve amarillo el borde del campo. */
+  border-color: var(--color-amarillo-intenso);
+
+  /*
+    Crea un anillo amarillo suave alrededor:
+    - 0: sin desplazamiento horizontal.
+    - 0: sin desplazamiento vertical.
+    - 0: sin desenfoque.
+    - 0.25rem: grosor exterior del anillo.
+    - rgba: amarillo con 25% de opacidad.
+  */
+  box-shadow: 0 0 0 0.25rem rgba(245, 211, 0, 0.25);
+}
+
+
+/*
+  .btn dentro del offcanvas selecciona botones del menú lateral.
+  Principalmente afecta el botón "Buscar".
+*/
+.navbar .offcanvas .btn {
+  /* Elimina el borde predeterminado del botón. */
+  border: 0;
+
+  /* Aplica el fondo morado oscuro. */
+  background-color: var(--color-fondo);
+
+  /* Aplica texto blanco. */
+  color: #ffffff;
+
+  /* Aplica negrita. */
+  font-weight: 700;
+}
+
+
+/*
+  :hover se activa al poner el cursor sobre el botón Buscar.
+*/
+.navbar .offcanvas .btn:hover {
+  /* Cambia el fondo a rosa intenso. */
+  background-color: var(--color-rosa);
+
+  /* Cambia el texto a morado oscuro. */
+  color: var(--color-texto-oscuro);
+}
+
+
+/*
+  .navbar-toggler corresponde al botón hamburguesa.
+*/
+.navbar-toggler {
+  /*
+    Agrega un borde morado oscuro semitransparente de 1px.
+  */
+  border: 1px solid rgba(43, 18, 59, 0.4);
+
+  /* Define el color base del botón. */
+  color: var(--color-texto-oscuro);
+}
+
+
+/*
+  :focus se activa cuando el botón hamburguesa es seleccionado.
+*/
+.navbar-toggler:focus {
+  /*
+    Muestra un anillo amarillo transparente para indicar foco.
+  */
+  box-shadow: 0 0 0 0.25rem rgba(245, 211, 0, 0.35);
+}
+
+
+/* ==========================================================================
+   4. SECCIÓN DE PRESENTACIÓN
+   ========================================================================== */
+
+/*
+  .presentacion selecciona tu bloque de bienvenida.
+
+  Es preferible controlar el ancho desde el contenedor principal en vez de
+  usar padding-left: 20% y padding-right: 20%, porque porcentajes altos
+  pueden dejar poco espacio en pantallas pequeñas.
+*/
+.presentacion {
+  /*
+    min() usa el menor valor entre:
+    - 100% - 2rem: ancho total menos 1rem a cada lado.
+    - 70rem: ancho máximo aproximado de 1120px.
+
+    Así el texto deja margen en móvil y no se extiende demasiado en escritorio.
+  */
+  width: min(100% - 2rem, 70rem);
+
+  /*
+    0 aplica margen superior e inferior de cero.
+    auto aplica márgenes laterales automáticos y centra el contenedor.
+  */
+  margin: 0 auto;
+
+  /*
+    padding con tres valores:
+    - clamp(...) = espacio superior adaptable.
+    - 0 = sin padding lateral porque el ancho ya deja margen.
+    - clamp(...) = espacio inferior adaptable.
+
+    El primer clamp:
+    - mínimo 4rem.
+    - ideal 8vw.
+    - máximo 7rem.
+
+    El segundo clamp:
+    - mínimo 2rem.
+    - ideal 5vw.
+    - máximo 4rem.
+  */
+  padding: clamp(4rem, 8vw, 7rem) 0 clamp(2rem, 5vw, 4rem);
+
+  /* Centra el texto dentro de toda la presentación. */
+  text-align: center;
+}
+
+
+/*
+  Este selector modifica únicamente h1 dentro de .presentacion.
+
+  IMPORTANTE:
+  Tu selector original era:
+
+  .presentacion h1, h5
+
+  Este se interpreta como:
+  - h1 dentro de .presentacion.
+  - TODOS los h5 del documento.
+
+  Por eso afectaba títulos de películas y carruseles.
+*/
+.presentacion h1 {
+  /*
+    Limita el ancho del título a aproximadamente 16 caracteres.
+
+    ch es una unidad relacionada con el ancho del carácter "0" de la fuente.
+    Sirve para controlar la longitud visual de una línea.
+  */
+  max-width: 16ch;
+
+  /*
+    margin con tres valores:
+    - 0 arriba.
+    - auto izquierda y derecha para centrar.
+    - 1.25rem abajo para separar el h1 del siguiente texto.
+  */
+  margin: 0 auto 1.25rem;
+
+  /* Aplica amarillo dorado. */
+  color: var(--color-amarillo);
+
+  /* Aplica la fuente decorativa. */
+  font-family: "Shantell Sans", cursive;
+
+  /*
+    Tamaño adaptable:
+    - mínimo 2.3rem.
+    - ideal 6vw.
+    - máximo 4.8rem.
+  */
+  font-size: clamp(2.3rem, 6vw, 4.8rem);
+
+  /* Aplica negrita. */
+  font-weight: 700;
+
+  /*
+    Hace que las líneas del título queden más cercanas.
+    Es útil si el título se parte en dos líneas.
+  */
+  line-height: 1.05;
+
+  /*
+    Intenta distribuir equilibradamente las palabras en varias líneas.
+
+    Este efecto es decorativo; navegadores sin soporte simplemente lo ignoran.
+  */
+  text-wrap: balance;
+}
+
+
+/*
+  Selecciona el h4 descriptivo dentro de la presentación.
+*/
+.presentacion h4 {
+  /*
+    Evita que párrafos largos ocupen demasiado ancho en pantallas grandes.
+    Un ancho moderado mejora la lectura.
+  */
+  max-width: 56rem;
+
+  /*
+    Centra el bloque y deja separación inferior.
+  */
+  margin: 0 auto 1.75rem;
+
+  /*
+    Aplica blanco rosado con 90% de opacidad.
+    La pequeña transparencia crea jerarquía frente al título amarillo.
+  */
+  color: rgba(255, 247, 252, 0.9);
+
+  /*
+    Texto adaptable:
+    - mínimo 1rem.
+    - ideal 2vw.
+    - máximo 1.2rem.
+  */
+  font-size: clamp(1rem, 2vw, 1.2rem);
+
+  /* Mantiene peso tipográfico regular. */
+  font-weight: 400;
+
+  /* Incrementa distancia entre líneas para lectura cómoda. */
+  line-height: 1.8;
+
+  /*
+    Centra el texto.
+
+    Se reemplaza text-align: justify, porque justificar un texto de anchura
+    variable puede crear huecos irregulares entre palabras, sobre todo en móvil.
+  */
+  text-align: center;
+}
+
+
+/*
+  Selecciona exclusivamente el h5 dentro de la presentación.
+
+  No afecta h5 usados como títulos de película dentro de carruseles.
+*/
+.presentacion h5 {
+  /* Elimina márgenes predeterminados. */
+  margin: 0;
+
+  /* Aplica rosa intenso. */
+  color: var(--color-rosa);
+
+  /* Define tamaño adaptable. */
+  font-size: clamp(1rem, 2vw, 1.25rem);
+
+  /* Hace el mensaje final más visible. */
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   5. GRID PRINCIPAL DE CATEGORÍAS
+   ========================================================================== */
+
+/*
+  Este selector busca un elemento que tenga simultáneamente las tres clases:
+  - row
+  - row-cols-1
+  - row-cols-md-2
+
+  En tu HTML corresponde al grid principal de categorías:
+  una columna en móvil y dos columnas en pantallas medianas o grandes.
+
+  Se usa un selector específico para NO modificar todos los .row de Bootstrap.
+*/
+.row.row-cols-1.row-cols-md-2 {
+  /*
+    Limita el ancho de la cuadrícula:
+    - 100% - 2rem deja márgenes laterales en pantalla pequeña.
+    - 82rem establece el ancho máximo para escritorio.
+  */
+  width: min(100% - 2rem, 82rem);
+
+  /* Centra el grid horizontalmente. */
+  margin: 0 auto;
+
+  /*
+    Deja espacio inferior adaptable:
+    - mínimo 3rem.
+    - ideal 7vw.
+    - máximo 6rem.
+  */
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+
+/*
+  IMPORTANTE PARA EL FUNCIONAMIENTO DEL OFFCANVAS:
+
+  NO agregues reglas globales como estas:
+
+  .col {
     padding-right: 10%;
-}
-.row{
+  }
+
+  .row {
     padding-left: 10%;
+  }
+
+  Bootstrap usa .row y .col en toda la interfaz: carruseles, formularios,
+  navbar y también dentro de los offcanvas de las películas.
+
+  Si se modifican globalmente, las columnas del offcanvas pueden crecer,
+  desplazarse, recortarse o responder de manera incorrecta.
+
+  El CSS de este archivo solo modifica el grid principal con el selector:
+  .row.row-cols-1.row-cols-md-2
+*/
+
+
+/*
+  Este selector significa:
+
+  1. Encuentra el grid principal.
+  2. Busca una columna .col que sea hija directa de ese grid.
+  3. Busca una figura .figure que sea hija directa de esa columna.
+
+  El símbolo ">" significa "hijo directo".
+*/
+.row.row-cols-1.row-cols-md-2 > .col > .figure {
+  /*
+    Intenta que la tarjeta utilice todo el alto disponible de su columna.
+    Ayuda a mantener un aspecto uniforme.
+  */
+  height: 100%;
+
+  /*
+    Oculta contenido que sobresalga de la tarjeta.
+
+    Es necesario para que una imagen ampliada con hover no se salga de las
+    esquinas redondeadas.
+  */
+  overflow: hidden;
+
+  /*
+    Agrega una línea amarilla muy tenue:
+    - 1px de grosor.
+    - color amarillo con 20% de opacidad.
+  */
+  border: 1px solid rgba(233, 204, 88, 0.2);
+
+  /* Redondea las esquinas usando la variable global. */
+  border-radius: var(--radio-grande);
+
+  /*
+    Fondo morado con 20% de transparencia.
+    Permite que el fondo general se perciba de forma sutil.
+  */
+  background: rgba(114, 84, 165, 0.2);
+
+  /* Añade sombra para elevar visualmente la tarjeta. */
+  box-shadow: var(--sombra-suave);
+
+  /*
+    Anima el movimiento vertical y el cambio de sombra al pasar el cursor.
+    Ambas transiciones duran 0.3 segundos.
+  */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-/*Imágenes de la página principal*/
-.figure-img{
-    width: 800px;
-    height: 400px;
+
+
+/*
+  :hover se activa al poner el cursor sobre una tarjeta de categoría.
+*/
+.row.row-cols-1.row-cols-md-2 > .col > .figure:hover {
+  /* Sustituye la sombra normal por una más profunda. */
+  box-shadow: var(--sombra-fuerte);
+
+  /*
+    Mueve la tarjeta hacia arriba.
+
+    Un valor negativo en Y sube el elemento.
+    0.45rem equivale aproximadamente a 7px.
+  */
+  /*transform: translateY(-0.45rem);*/
 }
-/*Descripción de tarjetas*/
-.figure-caption{
-    color: #E9CC58;
-    text-align:center;
-    font-size:larger;
+
+
+/*
+  .figure-img selecciona las imágenes principales de las categorías.
+*/
+.figure-img {
+  /*
+    Hace que la imagen ocupe todo el ancho de su tarjeta.
+  */
+  width: 100%;
+
+  /*
+    Mantiene una proporción visual de 16 de ancho por 8 de alto.
+
+    A diferencia de usar width: 800px y height: 400px, este método se adapta
+    automáticamente al ancho de móvil, tablet o escritorio.
+  */
+  aspect-ratio: 16 / 8;
+
+  /* Elimina márgenes automáticos alrededor de la imagen. */
+  margin: 0;
+
+  /*
+    Elimina el border-radius aplicado por Bootstrap con la clase .rounded.
+
+    !important es necesario si Bootstrap tiene una regla más específica.
+    La tarjeta .figure ya tiene las esquinas redondeadas y overflow: hidden.
+  */
+  border-radius: 0 !important;
+
+  /*
+    Llena toda el área sin deformar la fotografía.
+
+    cover mantiene la proporción original y recorta las partes sobrantes.
+  */
+  object-fit: cover;
+
+  /*
+    Determina desde qué zona se hace el recorte al usar object-fit: cover.
+    center conserva el centro de la imagen como prioridad.
+  */
+  object-position: center;
+
+  /* Prepara una animación suave de escala para hover. */
+  transition: transform 0.45s ease;
 }
-.figure-caption h5{
-    font-size:larger;
+
+
+/*
+  Cuando la tarjeta .figure recibe hover, cambia su imagen interna.
+*/
+.figure:hover .figure-img {
+  /*
+    Aumenta la imagen al 104% de su tamaño original.
+
+    El contenedor .figure tiene overflow: hidden, por lo que el aumento
+    no desborda las esquinas.
+  */
+  transform: scale(1.04);
 }
-/*Botón de explorar películas*/
-.btn-primary{
-    color:#7254a5;
-    background-color: #F5D300;
-    border:0;
+
+
+/*
+  .figure-caption contiene el título y descripción de cada categoría.
+*/
+.figure-caption {
+  /*
+    padding con tres valores:
+    - 1.5rem arriba.
+    - 1.5rem a izquierda y derecha.
+    - 0.25rem abajo.
+  */
+  padding: 1.5rem 1.5rem 0.25rem;
+
+  /*
+    Aplica blanco rosado con 88% de opacidad al texto descriptivo.
+  */
+  color: rgba(255, 247, 252, 0.88);
+
+  /* Centra título y párrafo. */
+  text-align: center;
 }
-.btn-primary:hover{
-    background-color:#FE53BB;
-    color: #F5D300;
+
+
+/*
+  Selecciona h5 dentro de cada caption de categoría.
+*/
+.figure-caption h5 {
+  /* Separa el título de la descripción. */
+  margin-bottom: 0.75rem;
+
+  /* Aplica amarillo dorado. */
+  color: var(--color-amarillo);
+
+  /*
+    Tamaño adaptable:
+    - mínimo 1.25rem.
+    - ideal 2vw.
+    - máximo 1.65rem.
+  */
+  font-size: clamp(1.25rem, 2vw, 1.65rem);
+
+  /* 800 corresponde a una negrita intensa. */
+  font-weight: 800;
+
+  /*
+    Controla la separación si el título ocupa varias líneas.
+  */
+  line-height: 1.25;
 }
-.card{
-    background-color:#E9CC58;
+
+
+/*
+  Selecciona el párrafo descriptivo dentro de cada caption.
+*/
+.figure-caption p {
+  /*
+    Reserva una altura mínima.
+
+    Esto ayuda a que los botones "Explorar películas" comiencen a alturas
+    parecidas aunque cada descripción tenga distinta cantidad de texto.
+
+    Se desactiva en móvil con una media query más adelante.
+  */
+  min-height: 4.8rem;
+
+  /* Separa el párrafo de los botones. */
+  margin-bottom: 0.5rem;
+
+  /* Define un texto apenas menor que el tamaño raíz. */
+  font-size: 0.98rem;
+
+  /* Mejora la lectura de descripciones largas. */
+  line-height: 1.65;
 }
+
+
+/*
+  Selecciona el párrafo que contiene el botón "Explorar películas".
+
+  En tu HTML dicho elemento tiene clases:
+  class="d-inline-flex gap-1"
+
+  > significa que el párrafo debe ser hijo directo de .figure.
+*/
+.figure > p.d-inline-flex {
+  /*
+    Convierte el contenedor en flex.
+
+    !important reemplaza d-inline-flex de Bootstrap, que utiliza
+    display: inline-flex.
+  */
+  display: flex !important;
+
+  /* Centra el botón horizontalmente. */
+  justify-content: center;
+
+  /* Hace que el contenedor ocupe todo el ancho disponible. */
+  width: 100%;
+
+  /*
+    padding con tres valores:
+    - 0 arriba.
+    - 1.5rem a los lados.
+    - 1.5rem abajo.
+  */
+  padding: 0 1.5rem 1.5rem;
+}
+
+
+/* ==========================================================================
+   6. BOTONES PRINCIPALES
+   ========================================================================== */
+
+/*
+  .btn-primary es una clase Bootstrap.
+
+  En tu HTML se usa en botones como:
+  - Explorar películas.
+  - Ver detalles.
+
+  Este bloque redefine el aspecto visual de todos los botones primary.
+*/
+.btn-primary {
+  /*
+    Establece un ancho mínimo de aproximadamente 160px.
+    Evita que botones cortos queden excesivamente pequeños.
+  */
+  min-width: 10rem;
+
+  /* Elimina borde predeterminado. */
+  border: 0;
+
+  /*
+    Un valor muy grande redondea completamente los extremos.
+    El resultado visual es un botón tipo píldora.
+  */
+  border-radius: 999px;
+
+  /* Fondo amarillo intenso. */
+  background-color: var(--color-amarillo-intenso);
+
+  /* Texto morado oscuro para alto contraste sobre el amarillo. */
+  color: var(--color-texto-oscuro);
+
+  /* Aplica negrita intensa. */
+  font-weight: 800;
+
+  /*
+    Separa ligeramente los caracteres.
+
+    em es relativo al tamaño actual de la fuente.
+    0.02em es una separación sutil.
+  */
+  letter-spacing: 0.02em;
+
+  /*
+    Anima fondo, color, movimiento y sombra al interactuar con el botón.
+  */
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+/*
+  Se activa cuando el cursor pasa sobre el botón o cuando recibe foco.
+*/
+.btn-primary:hover,
+.btn-primary:focus {
+  /* Cambia fondo a rosa intenso. */
+  background-color: var(--color-rosa);
+
+  /* Cambia texto a blanco. */
+  color: #ffffff;
+
+  /* Añade una sombra rosa con 28% de opacidad. */
+  box-shadow: 0 0.5rem 1.1rem rgba(254, 83, 187, 0.28);
+
+  /* Sube el botón ligeramente. */
+  transform: translateY(-0.15rem);
+}
+
+
+/* ==========================================================================
+   7. TARJETAS COLAPSABLES Y CARRUSELES
+   ========================================================================== */
+
+/*
+  .card es una clase de Bootstrap.
+
+  En tu HTML, cada .card aparece al abrir una categoría con el botón
+  "Explorar películas".
+*/
+.card {
+  /* Elimina el borde predeterminado de Bootstrap. */
+  border: 0;
+
+  /*
+    border-radius con cuatro valores:
+    1. esquina superior izquierda: 0.
+    2. esquina superior derecha: 0.
+    3. esquina inferior derecha: redondeada.
+    4. esquina inferior izquierda: redondeada.
+
+    Las esquinas superiores no se redondean porque la tarjeta se abre justo
+    debajo de la figura que ya tiene redondeo superior.
+  */
+  border-radius: 0 0 var(--radio-grande) var(--radio-grande);
+
+  /*
+    Crea un degradado amarillo diagonal.
+    145deg define la dirección del degradado.
+  */
+  background: linear-gradient(145deg, #f4d875, #e9cc58);
+
+  /* Define texto oscuro sobre fondo amarillo. */
+  color: var(--color-texto-oscuro);
+}
+
+
+/*
+  Selecciona el botón de cierre como hijo directo de una tarjeta.
+
+  Nota:
+  Se utiliza display: block y margin-left: auto en vez de align-self,
+  porque align-self solo funciona cuando el contenedor padre es flex.
+*/
+.card > .btn-close {
+  /*
+    Convierte el botón en bloque para que los márgenes automáticos funcionen
+    de forma predecible.
+  */
+  display: block;
+
+  /*
+    margin con cuatro valores:
+    - 1rem arriba.
+    - 1rem derecha.
+    - 0 abajo.
+    - auto izquierda.
+
+    auto en el margen izquierdo empuja la X al extremo derecho.
+  */
+  margin: 1rem 1rem 0 auto;
+}
+
+
+/*
+  .carousel selecciona todos los carruseles Bootstrap de la página.
+*/
 .carousel {
-    padding: 3%;
+  /* Agrega espacio interno alrededor de cada carrusel. */
+  padding: 1rem;
 }
-.carousel .offcanvas{
-    background-color:#7254a5;
+
+
+/*
+  .carousel-inner es el contenedor interno que guarda las diapositivas.
+*/
+.carousel-inner {
+  /*
+    Oculta partes de imágenes y animaciones que sobresalgan.
+  */
+  overflow: hidden;
+
+  /* Redondea las esquinas internas del carrusel. */
+  border-radius: 0.8rem;
+
+  /*
+    Añade una sombra para dar profundidad al contenido del carrusel.
+  */
+  box-shadow: 0 0.6rem 1.25rem rgba(43, 18, 59, 0.2);
+
+  /*
+    Fondo oscuro para las zonas vacías alrededor de pósters verticales.
+
+    Es necesario porque object-fit: contain no recorta la imagen.
+    Si el contenedor es más ancho que el póster, pueden quedar bandas
+    laterales; este color hace que se vean intencionales y no transparentes.
+  */
+  background-color: var(--color-fondo);
 }
-.carousel .offcanvas-body img{
-    height: 700px;
+
+
+/*
+  Selecciona imágenes que sean hijas directas de cada .carousel-item.
+
+  CAMBIO IMPORTANTE PARA VER LOS PÓSTERS COMPLETOS:
+  Se usa object-fit: contain en lugar de object-fit: cover.
+
+  - cover llena todo el espacio, pero recorta bordes si la proporción del
+    cartel no coincide con el área disponible.
+  - contain muestra la imagen completa sin recortes, aunque puede dejar
+    espacio vacío alrededor.
+*/
+.carousel-item > img {
+  /* Ocupa el ancho disponible dentro del carrusel. */
+  width: 100%;
+
+  /*
+    Define una altura adaptable:
+    - mínimo: 17rem.
+    - ideal: 38vw.
+    - máximo: 29rem.
+
+    Mantener una altura permite que los cambios entre diapositivas no hagan
+    saltar el contenido de la página.
+  */
+  height: clamp(17rem, 38vw, 29rem);
+
+  /*
+    Muestra la imagen completa sin deformarla ni recortarla.
+
+    contain ajusta toda la imagen dentro del contenedor.
+    Puede dejar bandas laterales o superiores/inferiores si la proporción
+    del póster no coincide con el área del carrusel.
+  */
+  object-fit: contain;
+
+  /*
+    Centra el póster en el espacio disponible.
+  */
+  object-position: center;
+
+  /*
+    Mantiene visible un color de fondo detrás de los espacios no ocupados
+    por el póster vertical.
+  */
+  background-color: var(--color-fondo);
 }
-.carousel .offcanvas-body .col{
+
+
+/*
+  .carousel-caption es el texto superpuesto sobre las imágenes:
+  título de película y botón "Ver detalles".
+*/
+.carousel-caption {
+  /*
+    Estas tres líneas hacen que el caption ocupe toda la franja inferior
+    del carrusel:
+
+    right: 0  = toca borde derecho.
+    bottom: 0 = toca borde inferior.
+    left: 0   = toca borde izquierdo.
+  */
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  /*
+    padding con tres valores:
+    - 2.5rem arriba para crear zona de degradado.
+    - 1rem lados.
+    - 1rem abajo.
+  */
+  padding: 2.5rem 1rem 1rem;
+
+  /*
+    Crea un degradado que empieza transparente y termina casi negro.
+
+    Mejora la legibilidad de texto blanco sobre carteles claros.
+  */
+  background: linear-gradient(transparent, rgba(20, 8, 28, 0.9));
+}
+
+
+/*
+  Selecciona el título h5 dentro de captions de carrusel.
+*/
+.carousel-caption h5 {
+  /* Texto blanco. */
+  color: #ffffff;
+
+  /* Tamaño del título. */
+  font-size: 1.2rem;
+
+  /* Negrita intensa. */
+  font-weight: 800;
+
+  /*
+    Agrega sombra detrás de texto:
+    - 0 horizontal.
+    - 2px abajo.
+    - 10px desenfoque.
+    - negro con 70% de opacidad.
+  */
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+
+/*
+  Selecciona botones primary dentro del caption del carrusel.
+*/
+.carousel-caption .btn-primary {
+  /* Separa el botón del título de la película. */
+  margin-top: 0.35rem;
+}
+
+
+/* ==========================================================================
+   8. OFFCANVAS DE DETALLES DE PELÍCULA
+   ========================================================================== */
+
+/*
+  POSIBLE CAUSA DEL PROBLEMA QUE DESCRIBES:
+
+  Tu HTML contiene muchos offcanvas de detalles, uno por película, dentro de
+  los carruseles. Bootstrap necesita que cada offcanvas tenga un id único y
+  que el atributo data-bs-target de cada botón apunte exactamente a ese id.
+
+  Ejemplo correcto:
+
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#staticBackdrop1"
+    aria-controls="staticBackdrop1">
+    Ver detalles
+  </button>
+
+  <div
+    class="offcanvas offcanvas-start w-75"
+    tabindex="-1"
+    id="staticBackdrop1"
+    aria-labelledby="staticBackdropLabel1">
+
+  Revisa también aria-labelledby:
+  debe señalar un id único del título, por ejemplo:
+  <h5 id="staticBackdropLabel1" class="offcanvas-title">Contenido</h5>
+
+  No debes repetir:
+  - id="staticBackdrop"
+  - id="staticBackdropLabel"
+
+  en varias películas. Los id repetidos pueden abrir el panel incorrecto
+  o provocar comportamiento irregular.
+*/
+
+
+/*
+  Este selector encuentra paneles offcanvas ubicados dentro de carruseles.
+
+  Es importante incluir ".carousel" para no cambiar el offcanvas del navbar.
+*/
+.carousel .offcanvas {
+  /*
+    Fuerza la posición fixed para asegurar que Bootstrap coloque el offcanvas
+    respecto a la ventana y no respecto al carrusel o a un contenedor padre.
+
+    Bootstrap ya usa position: fixed, pero esta regla lo reafirma en caso de
+    estilos previos que lo hayan cambiado.
+  */
+  position: fixed;
+
+  /*
+    El z-index controla capas:
+    valores mayores aparecen encima de valores menores.
+
+    Bootstrap usa un z-index alto para offcanvas. Se conserva un valor alto
+    para que el panel de película quede por encima de tarjetas y carruseles.
+  */
+  z-index: 1055;
+
+  /*
+    Evita que el panel quede visualmente condicionado por estilos de la
+    tarjeta o del carrusel donde está escrito en el HTML.
+  */
+  isolation: isolate;
+
+  /*
+    background usa dos capas:
+    1. Luz rosa circular semitransparente en la esquina superior derecha.
+    2. Fondo morado secundario.
+
+    radial-gradient:
+    - circle: forma circular.
+    - at top right: origen en esquina superior derecha.
+    - rosa con 15% de opacidad.
+    - transparente después de 25rem.
+  */
+  background:
+    radial-gradient(circle at top right, rgba(254, 83, 187, 0.15), transparent 25rem),
+    var(--color-fondo-secundario);
+
+  /* Establece texto claro para el panel. */
+  color: var(--color-texto);
+}
+
+
+/*
+  .w-75 es una utilidad de Bootstrap que normalmente establece width: 75%.
+
+  Este selector busca los offcanvas de carrusel que también usan w-75.
+*/
+.carousel .offcanvas.w-75 {
+  /*
+    Establece un ancho adaptable:
+    - 92vw: como máximo, ocupa 92% de la ventana.
+    - 58rem: límite máximo en pantallas grandes.
+
+    !important reemplaza la regla width de Bootstrap.
+  */
+  width: min(92vw, 58rem) !important;
+}
+
+
+/*
+  .offcanvas-header es la cabecera que contiene el título y botón de cierre.
+
+  Esta regla se limita a los detalles de películas para no cambiar el menú
+  offcanvas de la navbar.
+*/
+.carousel .offcanvas-header {
+  /*
+    Mantiene el encabezado visible mientras se desplaza el contenido largo
+    del panel. Esto ayuda a tener siempre disponible el botón de cerrar.
+
+    sticky hace que el encabezado se comporte como normal hasta llegar al
+    borde superior; entonces queda fijado dentro de su contenedor.
+  */
+  position: sticky;
+
+  /*
+    Indica que el encabezado se mantiene en la parte superior.
+  */
+  top: 0;
+
+  /*
+    Lo coloca por encima del contenido desplazable del mismo offcanvas.
+  */
+  z-index: 1;
+
+  /*
+    Aplica fondo sólido para que el texto no se mezcle con contenido al
+    hacer scroll.
+  */
+  background-color: var(--color-fondo-secundario);
+}
+
+
+/*
+  .offcanvas-body es la zona desplazable del panel individual de la película.
+*/
+.carousel .offcanvas-body {
+  /*
+    Permite el desplazamiento vertical si el contenido supera la altura de
+    la pantalla. Es fundamental en fichas largas con muchas listas.
+  */
+  overflow-y: auto;
+
+  /*
+    Permite que el área de contenido se ajuste dentro de un contenedor flex
+    de Bootstrap sin forzar una altura mayor a la pantalla.
+  */
+  min-height: 0;
+}
+
+
+/*
+  Selecciona el .row que sea hijo directo del cuerpo del offcanvas.
+
+  IMPORTANTE:
+  Aquí no se agregan padding-left o padding-right globales a .row o .col.
+  Bootstrap necesita controlar los gutters y el ancho de estas columnas.
+*/
+.carousel .offcanvas-body > .row {
+  /*
+    Alinea verticalmente las columnas de texto e imagen al centro.
+  */
+  align-items: center;
+
+  /*
+    gap con dos valores:
+    - 1.5rem para separación vertical entre filas.
+    - 0 para separación horizontal adicional.
+
+    Bootstrap ya controla gran parte del espacio entre columnas.
+  */
+  gap: 1.5rem 0;
+
+  /*
+    Elimina márgenes laterales agregados accidentalmente por estilos
+    anteriores de .row. Bootstrap maneja gutters mediante variables.
+  */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
+/*
+  Selecciona las columnas de detalle solamente dentro del offcanvas.
+
+  flex: 1 1 0 permite que cada columna pueda crecer y reducirse sin
+  desbordar el ancho del panel.
+*/
+.carousel .offcanvas-body > .row > .col {
+  /*
+    min-width: 0 permite que texto largo y elementos internos se reduzcan
+    correctamente en un contenedor flex. Sin esta regla, algunos contenidos
+    extensos pueden provocar desplazamiento horizontal.
+  */
+  min-width: 0;
+
+  /*
+    Elimina padding extra heredado de reglas anteriores aplicadas a .col.
+    Bootstrap continúa agregando espacios mediante gutters de la row.
+  */
+  padding-left: 0;
+  padding-right: 0;
+}
+
+
+/*
+  Selecciona el primer párrafo hijo directo de cada columna dentro del panel.
+
+  En tu HTML, suele ser el título en mayúsculas de una película.
+*/
+.carousel .offcanvas-body .col > p:first-child {
+  /* Separa el título de la lista de detalles. */
+  margin-bottom: 1rem;
+
+  /* Aplica amarillo dorado. */
+  color: var(--color-amarillo);
+
+  /*
+    Tamaño adaptable:
+    - mínimo 1.5rem.
+    - ideal 3vw.
+    - máximo 2.25rem.
+  */
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+
+  /* Negrita fuerte. */
+  font-weight: 800;
+
+  /* Mantiene juntas las líneas si el título se divide. */
+  line-height: 1.15;
+
+  /*
+    Evita que títulos muy largos salgan del área disponible.
+  */
+  overflow-wrap: anywhere;
+}
+
+
+/*
+  .list-group-item es la clase Bootstrap de cada dato de la película:
+  director, elenco, sinopsis, dónde ver, etc.
+*/
+.carousel .offcanvas-body .list-group-item {
+  /*
+    Añade espacio interno:
+    - 0.9rem arriba y abajo.
+    - 1rem en los lados.
+  */
+  padding: 0.9rem 1rem;
+
+  /* Cambia bordes a amarillo con transparencia de 35%. */
+  border-color: rgba(245, 211, 0, 0.35);
+
+  /*
+    Fondo morado claro con 72% de opacidad.
+  */
+  background-color: rgba(133, 99, 192, 0.72);
+
+  /* Texto blanco. */
+  color: #ffffff;
+
+  /* Tamaño levemente menor al estándar. */
+  font-size: 0.96rem;
+
+  /* Peso normal. */
+  font-weight: 400;
+
+  /* Interlineado apto para sinopsis largas. */
+  line-height: 1.55;
+
+  /*
+    Permite cortar palabras o enlaces demasiado largos que pudieran generar
+    scroll horizontal dentro del offcanvas.
+  */
+  overflow-wrap: anywhere;
+}
+
+
+/*
+  Selecciona imágenes dentro del cuerpo de los offcanvas de película.
+*/
+.carousel .offcanvas-body img {
+  /* Hace que la imagen ocupe el ancho de su columna. */
+  width: 100%;
+
+  /*
+    Limita la altura máxima aproximada a 672px.
+
+    Reemplaza el height: 700px de tu CSS inicial, porque una altura fija puede
+    ocupar demasiado espacio en pantallas bajas o móviles.
+  */
+  max-height: 42rem;
+
+  /*
+    Hace que se vea la imagen completa sin recortarla.
+
+    Esto es adecuado para pósters verticales dentro de la ficha individual.
+  */
+  object-fit: contain;
+
+  /*
+    Centra la imagen en el espacio disponible.
+  */
+  object-position: center;
+
+  /* Redondea las esquinas de la imagen. */
+  border-radius: 0.8rem;
+
+  /* Añade sombra para separarla del fondo. */
+  box-shadow: var(--sombra-suave);
+
+  /*
+    Fondo oscuro visible si la proporción de la imagen no ocupa todo el
+    rectángulo disponible.
+  */
+  background-color: var(--color-fondo);
+}
+
+
+/* ==========================================================================
+   9. FORMULARIO
+   ========================================================================== */
+
+/*
+  .form selecciona tu contenedor de formulario.
+*/
+.form {
+  /*
+    Mantiene margen lateral en móvil y limita ancho en pantallas grandes:
+    - 100% - 2rem.
+    - máximo de 48rem.
+  */
+  width: min(100% - 2rem, 48rem);
+
+  /* Centra horizontalmente el formulario. */
+  margin: 0 auto;
+
+  /*
+    Agrega espacio vertical adaptable:
+    - mínimo 3rem.
+    - ideal 6vw.
+    - máximo 5rem.
+
+    0 elimina padding horizontal porque el ancho ya deja márgenes.
+  */
+  padding: clamp(3rem, 6vw, 5rem) 0;
+}
+
+
+/*
+  Selecciona el h4 que actúa como título del formulario.
+*/
+.form h4 {
+  /* Deja espacio bajo el título. */
+  margin-bottom: 2rem;
+
+  /* Aplica amarillo dorado. */
+  color: var(--color-amarillo);
+
+  /*
+    Tamaño adaptable:
+    - mínimo 1.6rem.
+    - ideal 4vw.
+    - máximo 2.25rem.
+  */
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+
+  /* Negrita intensa. */
+  font-weight: 800;
+
+  /* Centra el título. */
+  text-align: center;
+}
+
+
+/*
+  .mb-3 es una utilidad Bootstrap usada para separar grupos de formulario.
+
+  En tu CSS original se usaba padding-left: 30% y padding-right: 30%.
+  Eso puede dejar campos demasiado angostos, especialmente en móvil.
+*/
+.form .mb-3 {
+  /*
+    Elimina padding lateral forzado.
+    Bootstrap conserva su margen inferior mb-3.
+  */
+  padding: 0;
+
+  /* Establece color claro para etiquetas. */
+  color: var(--color-texto);
+
+  /* Tamaño estándar de texto. */
+  font-size: 1rem;
+
+  /* Seminegrita para que las etiquetas sean legibles. */
+  font-weight: 600;
+}
+
+
+/*
+  .form-control es una clase Bootstrap para inputs y textareas.
+
+  Al seleccionar .form .form-control, solo se cambian campos dentro del
+  formulario principal y no el campo de búsqueda del navbar.
+*/
+.form .form-control {
+  /*
+    Añade área interior para que sea cómodo escribir:
+    - 0.85rem arriba/abajo.
+    - 1rem a los lados.
+  */
+  padding: 0.85rem 1rem;
+
+  /*
+    Conserva espacio para un borde que se volverá amarillo al enfocar.
+  */
+  border: 1px solid transparent;
+
+  /* Redondea los campos. */
+  border-radius: 0.7rem;
+
+  /*
+    Fondo morado claro con 85% de opacidad.
+  */
+  background-color: rgba(133, 99, 192, 0.85);
+
+  /* Texto escrito en blanco. */
+  color: #ffffff;
+}
+
+
+/*
+  ::placeholder selecciona el texto de ejemplo dentro de inputs y textareas.
+*/
+.form .form-control::placeholder {
+  /*
+    Blanco con 70% de opacidad.
+
+    Esto diferencia el texto de ayuda del texto que escribe la persona.
+  */
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/*
+  :focus se activa cuando un campo se selecciona.
+*/
+.form .form-control:focus {
+  /* Vuelve amarillo el borde. */
+  border-color: var(--color-amarillo-intenso);
+
+  /*
+    Hace el fondo completamente opaco al escribir.
+  */
+  background-color: rgba(133, 99, 192, 1);
+
+  /* Conserva texto blanco. */
+  color: #ffffff;
+
+  /* Muestra un anillo amarillo suave alrededor del campo. */
+  box-shadow: 0 0 0 0.25rem rgba(245, 211, 0, 0.2);
+}
+
+
+/* ==========================================================================
+   10. FOOTER
+   ========================================================================== */
+
+/*
+  footer selecciona la sección de pie de página.
+*/
+footer {
+  /* Lo separa del contenido anterior. */
+  margin-top: 1rem;
+
+  /*
+    padding con dos valores:
+    - 2rem arriba y abajo.
+    - 1rem a los lados.
+  */
+  padding: 2rem 1rem;
+
+  /* Fondo amarillo dorado. */
+  background-color: var(--color-amarillo);
+
+  /* Texto morado oscuro para contraste. */
+  color: var(--color-texto-oscuro);
+
+  /*
+    Tamaño adaptable:
+    - mínimo 0.9rem.
+    - ideal 2vw.
+    - máximo 1.05rem.
+  */
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+
+  /* Negrita. */
+  font-weight: 700;
+
+  /* Centra el contenido. */
+  text-align: center;
+}
+
+
+/* ==========================================================================
+   11. REGLAS RESPONSIVAS PARA MÓVILES
+   ========================================================================== */
+
+/*
+  @media aplica estilos solo cuando se cumple una condición.
+
+  max-width: 767.98px significa:
+  "usar estas reglas cuando la pantalla tenga 767.98px de ancho o menos".
+
+  Bootstrap utiliza aproximadamente 768px como punto de cambio entre
+  tamaños móviles y pantallas medianas.
+*/
+@media (max-width: 767.98px) {
+  /*
+    Ajusta la marca del navbar únicamente en móvil.
+  */
+  .navbar-brand {
+    /*
+      Evita que el nombre de la marca choque con logo o botón hamburguesa.
+    */
+    max-width: 12rem;
+  }
+
+  /*
+    Reduce espacio superior de presentación en teléfonos.
+  */
+  .presentacion {
+    /* Sobrescribe únicamente padding superior. */
+    padding-top: 3.5rem;
+  }
+
+  /*
+    En móvil las tarjetas se muestran una debajo de otra.
+    Por eso no hace falta obligar los párrafos a ocupar altura mínima.
+  */
+  .figure-caption p {
+    /*
+      auto deja que la altura dependa únicamente del contenido real.
+    */
+    min-height: auto;
+  }
+
+  /*
+    Ajusta la altura del carrusel en móvil.
+
+    Pósters verticales completos se visualizan mejor con un espacio más alto.
+  */
+  .carousel-item > img {
+    /*
+      Aumenta la altura relativa disponible para mostrar el póster completo
+      cuando object-fit: contain está activo.
+    */
+    height: clamp(24rem, 110vw, 38rem);
+  }
+
+  /*
+    Aumenta espacio superior del caption para que el degradado cubra más
+    área sobre imágenes pequeñas.
+  */
+  .carousel-caption {
+    padding-top: 3.5rem;
+  }
+
+  /*
+    Reduce título de película dentro del carrusel para evitar que ocupe
+    demasiado espacio sobre la imagen.
+  */
+  .carousel-caption h5 {
+    font-size: 1rem;
+  }
+
+  /*
+    Ajusta botones dentro de captions en pantalla pequeña.
+  */
+  .carousel-caption .btn-primary {
+    /*
+      Elimina el ancho mínimo general de 10rem.
+      Así el botón no cubre demasiado cartel en móvil.
+    */
+    min-width: auto;
+
+    /*
+      Reduce relleno interno para hacer el botón más compacto.
+    */
+    padding: 0.45rem 0.8rem;
+
+    /* Reduce tamaño de letras. */
+    font-size: 0.85rem;
+  }
+
+  /*
+    El offcanvas individual ocupa casi toda la pantalla pero conserva una
+    pequeña franja del contenido exterior visible.
+  */
+  .carousel .offcanvas.w-75 {
+    width: 94vw !important;
+  }
+
+  /*
+    Cambia el grid interno de información a una sola columna.
+
+    En tu estructura:
+    - Primera columna: texto de la película.
+    - Segunda columna: imagen.
+
+    flex-direction: column mantiene primero texto y después imagen.
+    Esto suele facilitar leer la ficha de una película en teléfonos.
+  */
+  .carousel .offcanvas-body > .row {
+    flex-direction: column;
+  }
+
+  /*
+    Hace que ambas columnas ocupen el ancho completo al apilarse.
+  */
+  .carousel .offcanvas-body > .row > .col {
+    width: 100%;
+  }
+
+  /*
+    Reduce la altura máxima de la imagen del detalle para que no monopolice
+    el espacio vertical del dispositivo.
+  */
+  .carousel .offcanvas-body img {
+    max-height: 32rem;
+  }
+}
+
+
+/*
+  ALTERNATIVA PARA EL ORDEN DEL OFFCANVAS EN MÓVIL:
+
+  Si prefieres mostrar primero la imagen y después el texto, reemplaza:
+
+  flex-direction: column;
+
+  por:
+
+  flex-direction: column-reverse;
+
+  Si no quieres cambiar el orden definido por tu HTML, elimina completamente:
+
+  .carousel .offcanvas-body > .row {
+    flex-direction: column;
+  }
+*/
+
+
+/* ==========================================================================
+   12. RESPETO A PREFERENCIAS DE MOVIMIENTO REDUCIDO
+   ========================================================================== */
+
+/*
+  Algunos usuarios configuran sus dispositivos para reducir movimiento,
+  por sensibilidad visual, mareo o accesibilidad.
+
+  prefers-reduced-motion: reduce detecta esa preferencia.
+*/
+@media (prefers-reduced-motion: reduce) {
+  /*
+    Aplica estas reglas a todos los elementos y a sus pseudoelementos.
+  */
+  *,
+  *::before,
+  *::after {
+    /*
+      Elimina desplazamientos suaves para esos usuarios.
+      auto representa el comportamiento normal sin animación.
+    */
+    scroll-behavior: auto !important;
+
+    /*
+      Reduce transiciones a una duración casi imperceptible.
+    */
+    transition-duration: 0.01ms !important;
+
+    /*
+      Reduce animaciones a una duración casi imperceptible.
+    */
+    animation-duration: 0.01ms !important;
+
+    /*
+      Impide que animaciones se repitan de forma continua.
+    */
+    animation-iteration-count: 1 !important;
+  }
+}
+
+
+/* ==========================================================================
+   13. REVISIONES HTML NECESARIAS PARA LOS OFFCANVAS
+   ========================================================================== */
+
+/*
+  ESTE BLOQUE ES DOCUMENTACIÓN Y NO SE EJECUTA COMO CSS.
+
+  Las siguientes correcciones se hacen en index.html, NO en styles.css.
+
+  --------------------------------------------------------------------------
+  A. ID ÚNICOS PARA CADA OFFCANVAS
+  --------------------------------------------------------------------------
+
+  Cada película debe tener su propio id único.
+
+  Correcto:
+
+  <button
+    class="btn btn-primary"
+    type="button"
+    data-bs-toggle="offcanvas"
+    data-bs-target="#staticBackdrop1"
+    aria-controls="staticBackdrop1">
+    Ver detalles
+  </button>
+
+  <div
+    class="offcanvas offcanvas-start w-75"
+    tabindex="-1"
+    id="staticBackdrop1"
+    aria-labelledby="staticBackdropLabel1">
+
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="staticBackdropLabel1">
+        Contenido
+      </h5>
+
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="offcanvas"
+        aria-label="Cerrar">
+      </button>
+    </div>
+
+  </div>
+
+  Para la segunda película:
+
+  data-bs-target="#staticBackdrop2"
+  aria-controls="staticBackdrop2"
+  id="staticBackdrop2"
+  aria-labelledby="staticBackdropLabel2"
+  id="staticBackdropLabel2"
+
+  Nunca repitas el mismo atributo id en varios elementos del HTML.
+  Un id debe existir una sola vez en toda la página.
+
+  --------------------------------------------------------------------------
+  B. ERROR DETECTADO EN EL ATRIBUTO aria-labelledby
+  --------------------------------------------------------------------------
+
+  En el contenido consultado de tu HTML aparece "aria-labelledbys..." en
+  algunos offcanvas. El nombre correcto es:
+
+  aria-labelledby="id-del-titulo"
+
+  Debe escribirse exactamente:
+  - aria
+  - guion
+  - labelled
+  - by
+
+  Incorrecto:
+  aria-labelledbys
+  aria-labelledbystaticBackdropLabel
+  aria-labelledbystaticBackdropLabel
+
+  Correcto:
+  aria-labelledby="staticBackdropLabel1"
+
+  Este atributo no suele impedir por sí solo que el offcanvas abra, pero una
+  escritura correcta mejora accesibilidad y evita referencias inválidas.
+
+  --------------------------------------------------------------------------
+  C. SCRIPT DE BOOTSTRAP
+  --------------------------------------------------------------------------
+
+  Antes de cerrar la etiqueta </body>, verifica que tengas el JavaScript de
+  Bootstrap. Sin este script no funcionan navbar offcanvas, collapse,
+  carruseles ni los botones "Ver detalles".
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="..."
+    crossorigin="anonymous">
+  </script>
+
+  bootstrap.bundle.min.js incluye Popper, requerido por varios componentes.
+
+  --------------------------------------------------------------------------
+  D. EVITA ANIDAR OFFCANVAS DENTRO DE CAROUSEL-ITEM
+  --------------------------------------------------------------------------
+
+  Aunque Bootstrap puede abrir un offcanvas escrito dentro de un carrusel,
+  es más estable colocar todos los div.offcanvas al final de <body>, fuera
+  de .carousel, .collapse, .figure, .row y .col.
+
+  Estructura recomendada:
+
+  <main>
+    ... tarjetas y carruseles ...
+  </main>
+
+  <div class="offcanvas ..." id="staticBackdrop1">
+    ... contenido de La La Land ...
+  </div>
+
+  <div class="offcanvas ..." id="staticBackdrop2">
+    ... contenido de Historia de un matrimonio ...
+  </div>
+
+  <script src="...bootstrap.bundle.min.js"></script>
+  </body>
+
+  Beneficios:
+  - Evita que overflow: hidden del carrusel recorte el panel.
+  - Evita conflictos de z-index y stacking context.
+  - Hace que Bootstrap gestione el foco y backdrop con mayor estabilidad.
+  - Simplifica el mantenimiento de la página.
+
+  Si conservas los offcanvas dentro del carrusel, el CSS anterior ayuda,
+  pero moverlos fuera es la solución HTML más robusta.
+
+  --------------------------------------------------------------------------
+  E. ELIMINA REGLAS ANTIGUAS CONFLICTIVAS
+  --------------------------------------------------------------------------
+
+  Verifica que no permanezcan estas reglas de tu CSS original:
+
+  .col {
+    padding-right: 10%;
+  }
+
+  .row {
+    padding-left: 10%;
+  }
+
+  .carousel .offcanvas-body .col {
     padding: 0%;
-    color:#FE53BB;
-    align-content: center;
-}
-.carousel .offcanvas-body .col p{
-    font-size: 30px;
-    font-weight: 500;
-}
-.carousel .offcanvas-body .col li{
-    background-color:#8563c0;
-    color:#471E65;
-    border-color:#F5D300;
-    font-size: large;
-    font-weight: 400;
-}
-
-/**---------------FORMULARIO--------------*/
-
-.form h4{
-    text-align: center;
-    padding:5%;
-    font-size: 30px;
-}
-.form .mb-3{
-    padding-left: 30%;
-    padding-right: 30%;
-    font-size: 25px;
-}
-#exampleFormControlInput1{
-    background-color:#8563c0;
-    border:0;
-}
-#exampleFormControlTextarea1{
-    background-color:#8563c0;
-    border:0;
-}
-.form{
-    padding-bottom: 5%;
-}
-
-/**---------------------FOOTER------------------*/
-
-footer{
-    padding:3%;
-    text-align: center;
-    background-color:#E9CC58;
-    font-size: 20px;
-    font-weight: 800;
     color: #FE53BB;
-}
+    align-content: center;
+  }
+
+  .carousel .offcanvas-body img {
+    height: 700px;
+  }
+
+  Motivos:
+  - Alteran todas las filas y columnas Bootstrap.
+  - Pueden generar un layout excesivamente ancho o comprimido.
+  - Una altura fija de 700px puede sobrepasar la pantalla móvil.
+  - El nuevo CSS usa selectores más específicos y tamaños adaptables.
+
+  --------------------------------------------------------------------------
+  F. ENLACE OPCIONAL HACIA EL INICIO
+  --------------------------------------------------------------------------
+
+  Para que la marca del navbar lleve a la bienvenida:
+
+  <a class="navbar-brand" href="#inicio">Fotogramas que permanecen</a>
+
+  Y para crear el destino:
+
+  <section class="presentacion" id="inicio">
+    <h1>Bienvenides, cinéfiles</h1>
+    <h4>Más allá de los géneros, cada película puede acompañarte...</h4>
+    <h5>Encuentra tu nueva comfort movie.</h5>
+  </section>
+
+  - href="#inicio" busca un elemento que tenga id="inicio".
+  - scroll-behavior: smooth hace suave el desplazamiento.
+  - section es una etiqueta semántica para una sección principal.
+  - class="presentacion" conserva los estilos definidos en este archivo.
+  ========================================================================== */
